@@ -40,55 +40,6 @@ class Engine:
         self.done = False
 
 
-    def CheckTouch(self):
-        # Handle user-input
-        dx,dy,dz=0,0,0
-        dx,dy=pygame.mouse.get_rel()
-        click=False
-        zoom=False
-        for event in pygame.event.get():
-            if event.type == QUIT:
-               pygame.quit()
-               return
-            elif event.type==FINGERUP:
-                if not self.mouse_movement:
-                    click=True
-                else:
-                    click=False
-                self.mouse_movement=False 
-                #print("FUP")
-            
-            #elif  event.type==FINGERDOWN and not self.mouse_movement:
-            #    print("FD")
-            
-            elif event.type==FINGERMOTION:
-                if not self.mouse_movement:
-                    self.mouse_movement=True
-                if event.finger_id>0:
-                    zoom=True
-                    click=False
-                #print("FM")
-     
-        if self.mouse_movement:
-            self.pan_box.x-= self.PAN_STEP*dx/10
-            self.pan_box.y-=self.PAN_STEP*dy/10
-
-        if click:
-            print("Click", pygame.mouse.get_pos())
-            
-        if zoom:
-            dz=pygame.mouse.get_rel()[1]
-            self.pan_box.width  -= self.PAN_STEP*2*dz/10
-            self.pan_box.height -= self.PAN_STEP*dz/10
-            if ( self.pan_box.width < self.PAN_STEP ):  # Ensure size is sane
-                self.pan_box.width = self.PAN_STEP
-            if ( self.pan_box.height < self.PAN_STEP ):
-                self.pan_box.height = self.PAN_STEP
-            if ( self.pan_box.width > self.PAN_BOX_WIDTH_MAX):  # Ensure size is sane
-                self.pan_box.width = self.PAN_BOX_WIDTH_MAX
-            if ( self.pan_box.height > self.PAN_BOX_HEIGHT_MAX):
-                self.pan_box.height = self.PAN_BOX_HEIGHT_MAX
-
     def CheckMouse(self):
         # Handle user-input
         dx,dy,dz=0,0,0
@@ -173,7 +124,6 @@ class Engine:
         
             self.zoom_image.blit( self.base_image, ( 0, 0 ), self.pan_box )                  # copy base image
             window_size = ( self.WINDOW_WIDTH, self.WINDOW_HEIGHT )
-            print(self.pan_box.height,self.pan_box.width)
             pygame.transform.scale( self.zoom_image, window_size, self.background )     # scale into thebackground
             self.last_box = self.pan_box.copy()                                         # copy current position
 
