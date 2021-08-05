@@ -12,10 +12,8 @@ done = False
 
 while not UI.done:
 
-    UI.CheckMouse()
-    UI.CheckKeyboard()
-    UI.CheckPanBoxMovement()
-    UI.CheckPanBoxZoom()
+    UI.CheckControls()
+    UI.UpdateUI()
     UI.clock.tick_busy_loop(60)
 
 
