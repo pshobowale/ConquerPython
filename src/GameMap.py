@@ -1,23 +1,29 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle 
+import constants as const
+from typing import Optional
 
 
 
 class GameMap:
-    def __init__(self, fpath="../Data/data.bin"):
+    def __init__(self, fpath:str="../Data/data.bin"):
         self._Pixel2Label,self._BackgroundMask,self._Label2Pixel,self._AdjacencyDict=pickle.load(open(fpath,"rb"))
         self._Background=np.zeros((self._BackgroundMask.shape[1],self._BackgroundMask.shape[0],3),dtype=np.uint8)
-        self._Background[self._BackgroundMask.T]=[0,155,0]
-        self._Background[self._BackgroundMask.T==0]=[100,100,255]
+        self._Background[self._BackgroundMask.T]= const.COLOR_BORDER
+        self._Background[self._BackgroundMask.T==0]= const.COLOR_SEA
+        
 
-    def getMap(self):
+    def getNumCountrys(self)-> int:
+        return len(self._Label2Pixel)
+
+    def getMap(self)->np.ndarray:
         return self._Background
  
-    def getLabel(self,x,y):
+    def getLabel(self,x,y)->int:
         return self._Pixel2Label[y,x]
 
-    def getPixelMaskByLabel(self,country_label):
+    def getPixelMaskByID(self,country_id:int)-> Optional[np.ndarray]:
         '''
             Get the mask and it's postion to colorize  a country
 
@@ -26,17 +32,16 @@ class GameMap:
 
             Returns: (bool_array)
         '''
-        if len(self._Label2Pixel[country_label])!=0:
-            mask=np.zeros(self._Background.shape[:2],dtype=bool)
-            x,y=self._Label2Pixel[country_label][0][1]
-            w,h=self._Label2Pixel[country_label][0][0].shape
-            mask[y:y+h,x:x+w]=self._Label2Pixel[country_label][0][0].transpose()
-            print(country_label)
+        if len(self._Label2Pixel[country_id])!=0:
+            mask=np.zeros(const.GAMEMAP_SIZE,dtype=bool)
+            x,y=self._Label2Pixel[country_id][0][1]
+            w,h=self._Label2Pixel[country_id][0][0].shape
+            mask[y:y+h,x:x+w]=self._Label2Pixel[country_id][0][0].transpose()
             return mask
         else:
             return None
 
-    def getPixelMaskByPos(self,x,y):
+    def getPixelMaskByPos(self,x:int,y:int)->Optional[np.ndarray]:
         '''
             Get the mask and it's postion to colorize  a country
 
@@ -46,6 +51,5 @@ class GameMap:
 
             Returns: (bool_array)
         '''
-        return self.getPixelMaskByLabel(self._Pixel2Label[y,x])
-    def update():
-        return self.getMap()
+        return self.getPixelMaskByID(self._Pixel2Label[y,x])
+
