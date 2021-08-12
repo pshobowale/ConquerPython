@@ -12,13 +12,13 @@ class Engine:
     def __init__(self,Map):
         self.Map=Map
         # Window size
-
+        self.nichtbenoetigtevar=0
         ### PyGame initialisation
         pygame.init()
         self.window = pygame.display.set_mode( ( const.WINDOW_WIDTH, const.WINDOW_HEIGHT ),
                                                  pygame.HWSURFACE|pygame.DOUBLEBUF)
         pygame.display.set_caption("Conquer")
-        self.current_map= pygame.pixelcopy.make_surface(self.Map.getMap())
+        self.current_map= pygame.pixelcopy.make_surface(self.Map.getMap()).convert()
         
         ### Pan-position
         self.background = pygame.Surface( ( const.WINDOW_WIDTH, const.WINDOW_HEIGHT ) )   # zoomed section is copied here
@@ -32,7 +32,7 @@ class Engine:
         self.done = False
 
         country_list=[c for c in range(1,Map.getNumCountrys())]
-        self.ColorCountryByID(country_list,color=const.COLOR_COUNTRY,update_ui=False)
+        self.ColorCountryByID(country_list,color=const.COLOR_COUNTRY)
         self.base_image=self.current_map.copy()
 
 
@@ -47,14 +47,17 @@ class Engine:
             self.zoom_image.blit( self.current_map, ( 0, 0 ), pan_box )                  # copy base image
             #print(self.pan_box.height,self.pan_box.width)
             pygame.transform.scale( self.zoom_image, const.WINDOW_SIZE, self.background )     # scale into thebackground
+            print("update",self.nichtbenoetigtevar,pan_box,force_refresh)
             self.last_box = pan_box.copy()                                         # copy current position
 
-        self.window.blit(self.background, ( 0, 0 ) )
-        pygame.display.flip()
+            self.window.blit(self.background, ( 0, 0 ) )
+            pygame.display.flip()
+            
+            self.nichtbenoetigtevar+=1
         self.clock.tick_busy_loop(60)
 
 
-    def ColorCountryByPos(self,px,py,color=const.COLOR_COUNTRY_SEL,uncolor_previsous=True,update_ui=True):
+    def ColorCountryByPos(self,px,py,color=const.COLOR_COUNTRY_SEL,uncolor_previsous=True):
         if uncolor_previsous:
             cmap=pygame.surfarray.array3d(self.base_image)
         else:
@@ -64,10 +67,9 @@ class Engine:
         if mask is not None:
             cmap[mask==True]=color
             pygame.surfarray.blit_array(self.current_map,cmap)
-            if update_ui:
-                self.UpdateUI(True)
+        self.UpdateUI(force_refresh=True)
     
-    def ColorCountryByID(self,country_id:Union[list[int],int],color=const.COLOR_COUNTRY_SEL,uncolor_previsous=False,update_ui=True):
+    def ColorCountryByID(self,country_id:Union[list[int],int],color=const.COLOR_COUNTRY_SEL,uncolor_previsous=False):
         if uncolor_previsous:
             cmap=pygame.surfarray.array3d(self.base_image)
         else:
@@ -85,6 +87,6 @@ class Engine:
         if mask is not None:
             cmap[mask==True]=color
             pygame.surfarray.blit_array(self.current_map,cmap)
-            if update_ui:
-                self.UpdateUI(True)
+            self.UpdateUI(force_refresh=True)
+            
 

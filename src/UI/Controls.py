@@ -12,6 +12,10 @@ class Controls:
         self.selected_country=(-1,-1)
         self.click_callback=click_callback
 
+        pygame.event.set_allowed([QUIT])
+        pygame.event.set_allowed([FINGERDOWN,FINGERUP,FINGERMOTION])
+        pygame.event.set_allowed([MOUSEBUTTONDOWN,MOUSEBUTTONUP,MOUSEWHEEL,KEYDOWN,KEYUP])
+
     def CheckTouch(self):
         # Handle user-input
         dx,dy,dz=0,0,0
@@ -122,11 +126,11 @@ class Controls:
         if ( self.pan_box.x < 0 ):
             self.pan_box.x = 0 
         elif ( self.pan_box.x + self.pan_box.width >= const.GAMEMAP_WIDTH ):
-            self.pan_box.x = const.GAMEMAP_WIDTH- self.pan_box.width - 1
+            self.pan_box.x = const.GAMEMAP_WIDTH- self.pan_box.width
         if ( self.pan_box.y < 0 ):
             self.pan_box.y = 0 
         elif ( self.pan_box.y + self.pan_box.height >= const.GAMEMAP_HEIGHT ):
-            self.pan_box.y = const.GAMEMAP_HEIGHT - self.pan_box.height - 1
+            self.pan_box.y = const.GAMEMAP_HEIGHT - self.pan_box.height
 
     def CheckPanBoxZoom(self):
         if(self.pan_zoom!=0):
@@ -143,6 +147,7 @@ class Controls:
                 self.pan_box.height=const.PAN_BOX_HEIGHT_MIN
 
     def CheckControls(self):
+        self.CheckTouch()
         self.CheckMouse()
         self.CheckKeyboard()
         self.CheckPanBoxMovement()
