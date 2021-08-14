@@ -46,8 +46,8 @@ class Controls:
                 #print("FM")
      
         if self.mouse_movement:
-            self.pan_box.x-= const.PAN_STEP*dx/10
-            self.pan_box.y-=const.PAN_STEP*dy/10
+            self.pan_box.x-= const.PAN_VEL*dx/10
+            self.pan_box.y-=const.PAN_VEL*dy/10
 
         if click:
             self.OnClick(pygame.mouse.get_pos())
@@ -55,16 +55,8 @@ class Controls:
             
         if zoom:
             dz=pygame.mouse.get_rel()[1]
-            self.pan_box.width  -= const.PAN_STEP*2*dz/10
-            self.pan_box.height -= const.PAN_STEP*dz/10
-            if ( self.pan_box.width < const.PAN_STEP ):  # Ensure size is sane
-                self.pan_box.width = const.PAN_STEP
-            if ( self.pan_box.height < const.PAN_STEP ):
-                self.pan_box.height = const.PAN_STEP
-            if ( self.pan_box.width > const.PAN_BOX_WIDTH_MAX):  # Ensure size is sane
-                self.pan_box.width = const.PAN_BOX_WIDTH_MAX
-            if ( self.pan_box.height > const.PAN_BOX_HEIGHT_MAX):
-                self.pan_box.height = const.PAN_BOX_HEIGHT_MAX
+            self.pan_zoom+=const.PAN_VEL/3000*dz/10
+            
 
     def CheckMouse(self):
         # Handle user-input
