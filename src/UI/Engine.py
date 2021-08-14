@@ -34,7 +34,7 @@ class Engine:
         country_list=[c for c in range(1,Map.getNumCountrys())]
         self.ColorCountryByID(country_list,color=const.COLOR_COUNTRY)
         self.base_image=self.current_map.copy()
-
+        self.UpdateUI(force_refresh=True)
 
     def UpdateUI(self,force_refresh=False):
         pan_box=self.Controls.Update()
