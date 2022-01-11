@@ -19,8 +19,8 @@ class Controls:
 
     def CheckTouch(self):
         # Handle user-input
-        dx,dy,dz=0,0,0
         dx,dy=pygame.mouse.get_rel()
+        dz=dy
         click=False
         zoom=False
         
@@ -50,13 +50,13 @@ class Controls:
         if self.mouse_movement:
             self.pan_box.x-= const.PAN_VEL*dx/15
             self.pan_box.y-=const.PAN_VEL*dy/30
+            
 
-        if click:
+        if click and not self.mouse_movement:
             self.OnClick(pygame.mouse.get_pos())
 
             
         if zoom:
-            dz=pygame.mouse.get_rel()[1]
             self.pan_zoom-=const.PAN_VEL/3000*dz/10
             
 
