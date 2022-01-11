@@ -50,7 +50,7 @@ class Engine:
             self.zoom_image.blit( self.current_map, ( 0, 0 ), pan_box )                  # copy base image
             #print(self.pan_box.height,self.pan_box.width)
             pygame.transform.scale( self.zoom_image, const.WINDOW_SIZE, self.background )     # scale into thebackground
-            print("update",self.update_counter,pan_box,force_refresh)
+            #print("update",self.update_counter,pan_box,force_refresh)
             self.last_box = pan_box.copy()                                         # copy current position
 
             self.window.blit(self.background, ( 0, 0 ) )
@@ -83,10 +83,10 @@ class Engine:
         t3=time.time_ns()
         
         total=(t3-t0)/100
-        print("Total: ",total// 10_000)
-        print("Surfarray Conversion: ",(t1-t0)/total)
-        print("Mask Creation: ",(t2-t1)/total )
-        print("Update: ",(t3-t2)/total)
+        #print("Total: ",total// 10_000)
+        #print("Surfarray Conversion: ",(t1-t0)/total)
+        #print("Mask Creation: ",(t2-t1)/total )
+        #print("Update: ",(t3-t2)/total)
         
     
     def ColorCountryByID(self,country_id:Union[list[int],int],color=const.COLOR_COUNTRY_SEL,uncolor_previsous=False):
@@ -112,9 +112,9 @@ class Engine:
         t3=time.time_ns()
 
         total=(t3-t0)/100
-        print("Total: ",total// 10_000)
-        print("Surfarray Conversion: ",(t1-t0)/total)
-        print("Mask Creation: ",(t2-t1)/total )
-        print("Update: ",(t3-t2)/total)
+        #print("Total: ",total// 10_000)
+        #print("Surfarray Conversion: ",(t1-t0)/total)
+        #print("Mask Creation: ",(t2-t1)/total )
+        #print("Update: ",(t3-t2)/total)
 
  

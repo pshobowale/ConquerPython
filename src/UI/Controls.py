@@ -14,7 +14,7 @@ class Controls:
 
         pygame.event.set_allowed([QUIT])
         pygame.event.set_allowed([FINGERDOWN,FINGERUP,FINGERMOTION])
-        #pygame.event.set_allowed([MOUSEBUTTONDOWN,MOUSEBUTTONUP,MOUSEWHEEL,KEYDOWN,KEYUP])
+        pygame.event.set_allowed([MOUSEBUTTONDOWN,MOUSEBUTTONUP,MOUSEWHEEL,KEYDOWN,KEYUP])
 
     def CheckTouch(self):
         # Handle user-input
@@ -32,10 +32,10 @@ class Controls:
                 else:
                     click=False
                 self.mouse_movement=False 
-                #print("FUP")
+                print("FUP")
             
-            #elif  event.type==FINGERDOWN and not self.mouse_movement:
-            #    print("FD")
+            elif  event.type==FINGERDOWN and not self.mouse_movement:
+                print("FD")
             
             elif event.type==FINGERMOTION:
                 if not self.mouse_movement:
@@ -43,7 +43,7 @@ class Controls:
                 if event.finger_id>0:
                     zoom=True
                     click=False
-                #print("FM")
+                print("FM")
      
         if self.mouse_movement:
             self.pan_box.x-= const.PAN_VEL*dx/10
