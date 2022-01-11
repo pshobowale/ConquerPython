@@ -1,5 +1,4 @@
 import pygame
-import pygame._sdl2 as sdl2
 from pygame.locals import *
 import constants as const
 from typing import Callable
@@ -44,7 +43,7 @@ class Controls:
                 if event.finger_id>0:
                     zoom=True
                     click=False
-                print("FM",sdl2.touch.get_num_fingers())
+                print("FM",,event.touch_id,event.finger_id, self.mouse_movement,zoom,click)
      
         if self.mouse_movement:
             self.pan_box.x-= const.PAN_VEL*dx/10
