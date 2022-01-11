@@ -19,6 +19,7 @@ class Controls:
 
     def CheckTouch(self):
         # Handle user-input
+        x,y=pygame.mouse.get_pos()
         dx,dy=pygame.mouse.get_rel()
         dz=dy
         click=False
@@ -57,7 +58,7 @@ class Controls:
             
 
         if click and not self.mouse_movement:
-            self.OnClick(pygame.mouse.get_pos())
+            self.OnClick((x,y))
 
             
         if zoom:
