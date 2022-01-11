@@ -44,7 +44,7 @@ class Controls:
                     self.mouse_movement=True
                 
                 td=touch.get_device(0)
-                print(nd)
+                print(td)
                 nf=touch.get_num_fingers(td)
                 if nf>1:
                     zoom=True
