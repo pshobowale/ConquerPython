@@ -21,3 +21,6 @@ COLOR_COUNTRY   = [40,120,20]
 COLOR_COUNTRY_SEL= [140,130,20]
 COLOR_BORDER    = [60,60,100]
 COLOR_SEA       = [50,50,125]
+
+FILE_DATA_BIN   = "../Data/data.bin"
+FILE_GAMEMAP    = "../Data/gamemap.png"

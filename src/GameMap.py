@@ -7,13 +7,19 @@ from typing import Optional
 
 
 class GameMap:
-    def __init__(self, fpath:str="../Data/data.bin"):
+    def __init__(self, fpath:str=const.FILE_DATA_BIN,gm_path:str=const.FILE_GAMEMAP):
+        self.GameMapLoaded=False
+        
         self._Pixel2Label,self._BackgroundMask,self._Label2Pixel,self._AdjacencyDict=pickle.load(open(fpath,"rb"))
         self._Background=np.zeros((self._BackgroundMask.shape[1],self._BackgroundMask.shape[0],3),dtype=np.uint8)
-        self._Background[self._BackgroundMask.T]= const.COLOR_BORDER
-        self._Background[self._BackgroundMask.T==0]= const.COLOR_SEA
         
-
+        if gm_path is None:
+            self._Background[self._BackgroundMask.T]= const.COLOR_BORDER
+            self._Background[self._BackgroundMask.T==0]= const.COLOR_SEA
+        else:
+            self.GameMapLoaded=True
+            self._Background=plt.imread(gm_path, dtype)
+        
     def getNumCountrys(self)-> int:
         return len(self._Label2Pixel)
 

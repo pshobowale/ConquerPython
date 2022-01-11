@@ -14,7 +14,7 @@ class Engine:
     def __init__(self,Map):
         self.Map=Map
         # Window size
-        self.nichtbenoetigtevar=0
+        self.update_counter=0
         ### PyGame initialisation
         pygame.init()
         self.window = pygame.display.set_mode( ( const.WINDOW_WIDTH, const.WINDOW_HEIGHT ),
@@ -33,8 +33,9 @@ class Engine:
         self.clock = pygame.time.Clock()
         self.done = False
 
-        country_list=[c for c in range(1,Map.getNumCountrys())]
-        self.ColorCountryByID(country_list,color=const.COLOR_COUNTRY)
+        if self.Map.GameMapLoaded is False:
+            country_list=[c for c in range(1,Map.getNumCountrys())]
+            self.ColorCountryByID(country_list,color=const.COLOR_COUNTRY)
         self.base_image=self.current_map.copy()
         self.UpdateUI(force_refresh=True)
 
@@ -49,13 +50,13 @@ class Engine:
             self.zoom_image.blit( self.current_map, ( 0, 0 ), pan_box )                  # copy base image
             #print(self.pan_box.height,self.pan_box.width)
             pygame.transform.scale( self.zoom_image, const.WINDOW_SIZE, self.background )     # scale into thebackground
-            print("update",self.nichtbenoetigtevar,pan_box,force_refresh)
+            print("update",self.update_counter,pan_box,force_refresh)
             self.last_box = pan_box.copy()                                         # copy current position
 
             self.window.blit(self.background, ( 0, 0 ) )
             pygame.display.flip()
             
-            self.nichtbenoetigtevar+=1
+            self.update_counter+=1
         self.clock.tick_busy_loop(60)
 
 
