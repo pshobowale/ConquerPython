@@ -18,7 +18,10 @@ class GameMap:
             self._Background[self._BackgroundMask.T==0]= const.COLOR_SEA
         else:
             self.GameMapLoaded=True
-            self._Background=plt.imread(gm_path, dtype)
+            print(self._Background.shape)
+            self._Background=plt.imread(gm_path)[:,:,:3]*255
+            self._Background=self._Background.astype(int)
+            print(self._Background.shape)
         
     def getNumCountrys(self)-> int:
         return len(self._Label2Pixel)

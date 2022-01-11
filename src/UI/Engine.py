@@ -73,13 +73,12 @@ class Engine:
         t2=time.time_ns()
         if mask is not None:
             (x0,y0,w,h),mask=mask
-            for i in range(w):
-                for j in range(h):
-                    if mask[j,i]:
-                        cmap[y0+j,x0+i] = color
+            for i,j in zip(*np.where(mask)):
+                j,i= int(i),int(j)
+                cmap[y0+j,x0+i] = color
             
-
         cmap.close()
+
         self.UpdateUI(force_refresh=True)
         t3=time.time_ns()
         
