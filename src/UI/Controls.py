@@ -14,7 +14,7 @@ class Controls:
 
         pygame.event.set_allowed([QUIT])
         pygame.event.set_allowed([FINGERDOWN,FINGERUP,FINGERMOTION])
-        pygame.event.set_allowed([MOUSEBUTTONDOWN,MOUSEBUTTONUP,MOUSEWHEEL,KEYDOWN,KEYUP])
+        #pygame.event.set_allowed([MOUSEBUTTONDOWN,MOUSEBUTTONUP,MOUSEWHEEL,KEYDOWN,KEYUP])
 
     def CheckTouch(self):
         # Handle user-input
