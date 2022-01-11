@@ -22,8 +22,15 @@ class Controls:
         dx,dy=pygame.mouse.get_rel()
         click=False
         zoom=False
-        finger_id=0
-        for event in pygame.event.get():
+        
+        num_fingers=0
+        events=pygame.event.get()
+        for event in events:
+            if event.type==FINGERMOTION:
+                num_fingers+=1
+
+
+        for event in events:
             if event.type == QUIT:
                pygame.quit()
                return
@@ -41,9 +48,9 @@ class Controls:
             elif event.type==FINGERMOTION:
                 if not self.mouse_movement:
                     self.mouse_movement=True
-                #if event.finger_id>0:
-                #    zoom=True
-                #    click=False
+                if num_fingers>1:
+                    zoom=True
+                click=False
                 print("FM")
      
         if self.mouse_movement:
