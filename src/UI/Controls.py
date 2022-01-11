@@ -47,8 +47,8 @@ class Controls:
                 print("FM")
      
         if self.mouse_movement:
-            self.pan_box.x-= const.PAN_VEL*dx/30
-            self.pan_box.y-=const.PAN_VEL*dy/30
+            self.pan_box.x-= const.PAN_VEL*dx/7
+            self.pan_box.y-=const.PAN_VEL*dy/7
 
         if click:
             self.OnClick(pygame.mouse.get_pos())
