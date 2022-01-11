@@ -37,15 +37,12 @@ class Controls:
                 else:
                     click=False
                 self.mouse_movement=False 
-                print("FUP")
             
-            elif  event.type==FINGERDOWN and not self.mouse_movement:
-                print("FD")
             
             elif event.type==FINGERMOTION:
                 if not self.mouse_movement:
                     self.mouse_movement=True
-                if touch.get_num_fingers(event.touch_id)>1:
+                if touch.get_num_fingers(touch.get_device(0))>1:
                     zoom=True
                 click=False
                 print("FM")
