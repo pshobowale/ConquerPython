@@ -1,4 +1,5 @@
 import pygame
+import pygame._sdl2.touch as touch
 from pygame.locals import *
 import constants as const
 from typing import Callable
@@ -25,17 +26,8 @@ class Controls:
         
         num_fingers=0
         finger_id=None
-        events=pygame.event.get()
-        for event in events:
-            if event.type==FINGERMOTION:
-                if finger_id ==None:
-                    finger_id=event.finger_id
-                    num_fingers+=1
-                if finger_id is not event.finger_id:
-                    num_fingers+=1
-
-
-        for event in events:
+        
+        for event in pygame.event.get():
             if event.type == QUIT:
                pygame.quit()
                return
@@ -53,7 +45,7 @@ class Controls:
             elif event.type==FINGERMOTION:
                 if not self.mouse_movement:
                     self.mouse_movement=True
-                if num_fingers>1:
+                if touch.get_num_fingers(event.touch_id)>1:
                     zoom=True
                 click=False
                 print("FM")
