@@ -52,8 +52,8 @@ class Controls:
                 print("FM")
      
         if self.mouse_movement:
-            self.pan_box.x-= const.PAN_VEL*dx/20
-            self.pan_box.y-=const.PAN_VEL*dy/40
+            self.pan_box.x-= const.PAN_VEL*dx/10
+            self.pan_box.y-=const.PAN_VEL*dy/20
             
 
         if click and not self.mouse_movement:
