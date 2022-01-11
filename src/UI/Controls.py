@@ -43,7 +43,7 @@ class Controls:
                 if event.finger_id>0:
                     zoom=True
                     click=False
-                print("FM",,event.touch_id,event.finger_id, self.mouse_movement,zoom,click)
+                print("FM",event.touch_id,event.finger_id, self.mouse_movement,zoom,click)
      
         if self.mouse_movement:
             self.pan_box.x-= const.PAN_VEL*dx/10
