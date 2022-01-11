@@ -24,10 +24,15 @@ class Controls:
         zoom=False
         
         num_fingers=0
+        finger_id=None
         events=pygame.event.get()
         for event in events:
             if event.type==FINGERMOTION:
-                num_fingers+=1
+                if finger_id ==None:
+                    finger_id=event.finger_id
+                    num_fingers+=1
+                if finger_id is not event.finger_id:
+                    num_fingers+=1
 
 
         for event in events:
