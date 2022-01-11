@@ -142,8 +142,8 @@ class Controls:
 
     def CheckControls(self):
         self.CheckTouch()
-        self.CheckMouse()
-        self.CheckKeyboard()
+        #self.CheckMouse()
+        #self.CheckKeyboard()
         self.CheckPanBoxMovement()
         self.CheckPanBoxZoom()
 
