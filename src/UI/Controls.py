@@ -141,8 +141,8 @@ class Controls:
                 self.pan_box.height=const.PAN_BOX_HEIGHT_MIN
 
     def CheckControls(self):
-        #self.CheckTouch()
-        self.CheckMouse()
+        self.CheckTouch()
+        #self.CheckMouse()
         self.CheckKeyboard()
         self.CheckPanBoxMovement()
         self.CheckPanBoxZoom()
