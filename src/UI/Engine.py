@@ -6,6 +6,8 @@ import constants as const
 import numpy as np
 from UI.Controls import Controls
 from typing import Union
+import time
+import matplotlib.pyplot as plt
 
 class Engine:
 
@@ -58,23 +60,42 @@ class Engine:
 
 
     def ColorCountryByPos(self,px,py,color=const.COLOR_COUNTRY_SEL,uncolor_previsous=True):
+        t0=time.time_ns()
+        color=pygame.Color(color)
+
         if uncolor_previsous:
-            cmap=pygame.surfarray.array3d(self.base_image)
-        else:
-            cmap=pygame.surfarray.array3d(self.current_map)
-        
+            self.current_map=self.base_image.copy()
+            
+        cmap=pygame.PixelArray(self.current_map)
+        t1=time.time_ns()
         mask=self.Map.getPixelMaskByPos(px,py)
+        t2=time.time_ns()
         if mask is not None:
-            cmap[mask==True]=color
-            pygame.surfarray.blit_array(self.current_map,cmap)
+            (x0,y0,w,h),mask=mask
+            for i in range(w):
+                for j in range(h):
+                    if mask[j,i]:
+                        cmap[y0+j,x0+i] = color
+            
+
+        cmap.close()
         self.UpdateUI(force_refresh=True)
+        t3=time.time_ns()
+        
+        total=(t3-t0)/100
+        print("Total: ",total// 10_000)
+        print("Surfarray Conversion: ",(t1-t0)/total)
+        print("Mask Creation: ",(t2-t1)/total )
+        print("Update: ",(t3-t2)/total)
+        
     
     def ColorCountryByID(self,country_id:Union[list[int],int],color=const.COLOR_COUNTRY_SEL,uncolor_previsous=False):
+        t0=time.time_ns()
         if uncolor_previsous:
             cmap=pygame.surfarray.array3d(self.base_image)
         else:
             cmap=pygame.surfarray.array3d(self.current_map)
-
+        t1=time.time_ns()
         if type(country_id) is int:
             country_id=[country_id]
 
@@ -83,10 +104,17 @@ class Engine:
             cmask=self.Map.getPixelMaskByID(cid)
             if cmask is not None:
                 mask=cmask|mask
-
+        t2=time.time_ns()
         if mask is not None:
             cmap[mask==True]=color
             pygame.surfarray.blit_array(self.current_map,cmap)
             self.UpdateUI(force_refresh=True)
-            
+        t3=time.time_ns()
 
+        total=(t3-t0)/100
+        print("Total: ",total// 10_000)
+        print("Surfarray Conversion: ",(t1-t0)/total)
+        print("Mask Creation: ",(t2-t1)/total )
+        print("Update: ",(t3-t2)/total)
+
+ 

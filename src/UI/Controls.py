@@ -14,7 +14,7 @@ class Controls:
 
         pygame.event.set_allowed([QUIT])
         pygame.event.set_allowed([FINGERDOWN,FINGERUP,FINGERMOTION])
-        #pygame.event.set_allowed([MOUSEBUTTONDOWN,MOUSEBUTTONUP,MOUSEWHEEL,KEYDOWN,KEYUP])
+        pygame.event.set_allowed([MOUSEBUTTONDOWN,MOUSEBUTTONUP,MOUSEWHEEL,KEYDOWN,KEYUP])
 
     def CheckTouch(self):
         # Handle user-input
@@ -86,9 +86,11 @@ class Controls:
             self.pan_box.y+=pan_step*dy/10
         else:
             click=True
+            
 
         if click:
             self.OnClick(pygame.mouse.get_pos())
+
             
 
     def CheckKeyboard(self):
@@ -139,9 +141,9 @@ class Controls:
                 self.pan_box.height=const.PAN_BOX_HEIGHT_MIN
 
     def CheckControls(self):
-        self.CheckTouch()
-        #self.CheckMouse()
-        #self.CheckKeyboard()
+        #self.CheckTouch()
+        self.CheckMouse()
+        self.CheckKeyboard()
         self.CheckPanBoxMovement()
         self.CheckPanBoxZoom()
 

@@ -49,7 +49,15 @@ class GameMap:
                 x (int): X-Position in Image
                 y (int): Y-Position in Image
 
-            Returns: (bool_array)
+            Returns: ((x0,y0,w,h),bool_array)
         '''
-        return self.getPixelMaskByID(self._Pixel2Label[y,x])
+        country_id=self._Pixel2Label[y,x]
+
+        if len(self._Label2Pixel[country_id])!=0:
+            x,y=self._Label2Pixel[country_id][0][1]
+            w,h=self._Label2Pixel[country_id][0][0].shape
+            mask=self._Label2Pixel[country_id][0][0].transpose()
+            return ((x,y,w,h),mask)
+        else:
+            return None
 
